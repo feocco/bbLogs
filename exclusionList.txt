@@ -1,0 +1,7 @@
+data_integration_log
+rows have been deleted from old
+Error generating json for StreamEntry
+An error occurred while loading the toc named
+Error in MyBbAction
+Could not determine the course availability
+could not update grades for AR evaluation
