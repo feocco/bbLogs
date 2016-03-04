@@ -87,3 +87,21 @@ class ErrorFile:
 	def stripErrorId(self, firstLine):
 		if 'Error ID is' in firstLine:
 			pass
+
+	# Writing new counts function
+	def counts(self):
+		counts = []
+		counted = []
+		
+		date = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')
+		errorID = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
+
+		patterns = [date, errorID]
+
+		for err in self.errors:
+
+			err = err.split('\n')[0]
+
+			# Replace unique patterns w/ ''
+			for pattern in patterns:
+				err = re.sub(pattern, '', err)
