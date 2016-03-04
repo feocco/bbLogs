@@ -6,7 +6,7 @@ class ErrorFile:
 		self.filename = filename
 		self.newName = self.filename[:-4] + '_formatted.txt'
 		self.errors = self.createErrors()
-		self.exclusions = self.checkExclusions()
+		self.exclude = self.checkExclusions()
 		self.count = []
 
 
@@ -31,7 +31,7 @@ class ErrorFile:
 	def printErrors(self):
 		f = open(self.newName, 'w')
 		for x in range(len(self.errors)):
-			if self.exclusions[x] == False:
+			if self.exclude[x] == False:
 				f.write(self.errors[x])
 		f.close()
 
@@ -39,7 +39,7 @@ class ErrorFile:
 	def printFirstLines(self):
 		f = open(self.newName[:-4] + 'Lines.txt', 'w')
 		for x in range(len(self.errors)):
-			if self.exclusions[x] == False:
+			if self.exclude[x] == False:
 				f.write(self.errors[x].split('\n')[0] + '\n')
 		f.close()
 
