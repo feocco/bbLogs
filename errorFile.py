@@ -39,7 +39,7 @@ class ErrorFile:
 	def printFirstLines(self):
 		f = open(self.newName[:-4] + 'Lines.txt', 'w')
 		for x in range(len(self.errors)):
-			if self.exclude[x] == False:
+			if not self.exclude[x]:
 				f.write(self.errors[x].split('\n')[0] + '\n')
 		f.close()
 
