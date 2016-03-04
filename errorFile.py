@@ -1,3 +1,5 @@
+import re
+
 class ErrorFile:
 	"""Class that stores Blackboard log files and their locations"""
 
@@ -14,21 +16,23 @@ class ErrorFile:
 		logFile = open(self.filename)
 		errorString = ''
 		errorList = []
-		y = 0
+		regex = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')		
 
 		for line in logFile:
-			if y == 0 or '2015-' not in line:
+			if not regex.search(line):
 				errorString += str(line)
-				y = 1
 			else:
 				errorList.append(errorString)
 				errorString = line
 		
 		logFile.close()
+		
+		# First list item is empty string
+		errorList = errorList[1:]
 		return errorList
 
 
-	def printErrors(self):
+	def createFile(self):
 		f = open(self.newName, 'w')
 		for x in range(len(self.errors)):
 			if self.exclude[x] == False:
@@ -36,7 +40,7 @@ class ErrorFile:
 		f.close()
 
 
-	def printFirstLines(self):
+	def createLineFile(self):
 		f = open(self.newName[:-4] + 'Lines.txt', 'w')
 		for x in range(len(self.errors)):
 			if not self.exclude[x]:
