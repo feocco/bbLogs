@@ -90,8 +90,8 @@ class ErrorFile:
 
 	# Writing new counts function
 	def counts(self):
+		errors = []
 		counts = []
-		counted = []
 		
 		date = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')
 		errorID = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
@@ -100,8 +100,22 @@ class ErrorFile:
 
 		for err in self.errors:
 
+			#Sort only by first line, no Caused By's taken into account. 
 			err = err.split('\n')[0]
 
 			# Replace unique patterns w/ ''
 			for pattern in patterns:
 				err = re.sub(pattern, '', err)
+
+			# If error not in list, add it to the list. Then add a count of 1. 
+			# Else add one to its count.
+			if err not in errors:
+				errors.append(err)
+				counts.append(1)
+			else:
+				counts[errors.index(err)] += 1
+
+		f = open(self.newName[:-4] + 'Counts.txt', 'w')
+		for err in errors:
+			f.write(err + '\n\tCount: {0}\n'.format(counts[errors.index(err)]))
+		f.close()
