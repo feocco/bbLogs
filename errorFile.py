@@ -1,4 +1,5 @@
 import re
+from difflib import SequenceMatcher
 
 class ErrorFile:
 	"""Class that stores Blackboard log files and their locations"""
@@ -10,6 +11,8 @@ class ErrorFile:
 		self.errors = self.createErrors()
 		self.exclude = self.checkExclusions()
 		self.count = []
+		# Should switch to hashes
+		# self.dict = {'ERROR': [exclude, count, exceptionType]}
 
 
 	def createErrors(self):
@@ -61,37 +64,10 @@ class ErrorFile:
 		return booleanList
 
 
-	def getCounts(self):
-		counts = []
-		countedAlready = []
-		# Get rid of timestamp using string indexing [28:]
-		# Can we count # of duplicate items in a list easily? 
-		for err in self.errors:
-			counter = 0
-			err = err.split('\n')[0][28:]
-			#print(err)
-			if err not in countedAlready:
-				for x in self.errors:
-					x = x.split('\n')[0][28:]
-					#print(x)
-					#UnicodeEncodeError: 'charmap' codec can't encode characters in position 137-138: character maps to <undefined>
-					if x in err:
-						counter += 1
-				countedAlready.append(err)
-			counts.append(counter)
-		return counts
-
-		# Need to account for "Error ID is XXXX-XXXXX-XXXXX"
-		# Need to account for different PK1's, URL's, etc
-
-	def stripErrorId(self, firstLine):
-		if 'Error ID is' in firstLine:
-			pass
-
-	# Writing new counts function
+	# Writing new self.count function
 	def counts(self):
 		errors = []
-		counts = []
+		self.count = []
 		
 		date = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')
 		errorID = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
@@ -111,11 +87,11 @@ class ErrorFile:
 			# Else add one to its count.
 			if err not in errors:
 				errors.append(err)
-				counts.append(1)
+				self.count.append(1)
 			else:
-				counts[errors.index(err)] += 1
+				self.count[errors.index(err)] += 1
 
-		f = open(self.newName[:-4] + 'Counts.txt', 'w')
+		f = open(self.newName[:-4] + 'self.count.txt', 'w')
 		for err in errors:
-			f.write(err + '\n\tCount: {0}\n'.format(counts[errors.index(err)]))
+			f.write(err[2:] + '\n\tCount: {0}\n'.format(self.count[errors.index(err)]))
 		f.close()

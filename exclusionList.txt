@@ -5,4 +5,4 @@ An error occurred while loading the toc named
 Error in MyBbAction
 Could not determine the course availability
 could not update grades for AR evaluation
-java.lang.IllegalStateException: Optional.get() cannot be called on an absent value
+Optional.get() cannot be called on an absent value
