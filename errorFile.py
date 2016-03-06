@@ -1,5 +1,4 @@
 import re
-from difflib import SequenceMatcher
 
 class ErrorFile:
 	"""Class that stores Blackboard log files and their locations"""
@@ -9,10 +8,35 @@ class ErrorFile:
 		self.filename = filename
 		self.newName = self.filename[:-4] + '_formatted.txt'
 		self.errors = self.createErrors()
-		self.exclude = self.checkExclusions()
 		self.count = []
-		# Should switch to hashes
-		# self.dict = {'ERROR': [exclude, count, exceptionType]}
+		self.dict = {} # "Error": [Quantity, Exclude]
+
+	def createDict(self):
+		errorID = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
+		
+		for error in self.errors:
+			orig = error
+			error = error.split('\n')[0][27:]
+			values = [1, self.checkExclusion(error), orig]
+
+			# Get rid of error-id
+			error = re.sub(errorID, '', error)
+			# Get rid of all numbers
+			error = ''.join([i for i in error if not i.isdigit()])
+
+			if error not in self.dict:
+				self.dict[error] = values
+			else:
+				a, b, c = self.dict[error]
+				a += 1
+				self.dict[error] = [a,b,c]
+
+
+		f = open(self.newName, 'w')
+		for key, value in self.dict.items():
+			if not value[1]:
+				f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n')
+		f.close()
 
 
 	def createErrors(self):
@@ -35,63 +59,10 @@ class ErrorFile:
 		return errorList
 
 
-	def createFile(self):
-		f = open(self.newName, 'w')
-		for x in range(len(self.errors)):
-			if self.exclude[x] == False:
-				f.write(self.errors[x])
-		f.close()
-
-
-	def createLineFile(self):
-		f = open(self.newName[:-4] + 'Lines.txt', 'w')
-		for x in range(len(self.errors)):
-			if not self.exclude[x]:
-				f.write(self.errors[x].split('\n')[0] + '\n')
-		f.close()
-
-
-	def checkExclusions(self):
+	def checkExclusion(self, error):
 		exclusionList = [i.rstrip('\n') for i in open('exclusionList.txt')]
-		booleanList = []
-		for err in self.errors:
-			y = False
-			for x in exclusionList:
-				if x in err.split('\n')[0]:
-					y = True
-			booleanList.append(y)
-
-		return booleanList
-
-
-	# Writing new self.count function
-	def counts(self):
-		errors = []
-		self.count = []
-		
-		date = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')
-		errorID = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
-
-		patterns = [date, errorID]
-
-		for err in self.errors:
-
-			#Sort only by first line, no Caused By's taken into account. 
-			err = err.split('\n')[0]
-
-			# Replace unique patterns w/ ''
-			for pattern in patterns:
-				err = re.sub(pattern, '', err)
-
-			# If error not in list, add it to the list. Then add a count of 1. 
-			# Else add one to its count.
-			if err not in errors:
-				errors.append(err)
-				self.count.append(1)
-			else:
-				self.count[errors.index(err)] += 1
-
-		f = open(self.newName[:-4] + 'self.count.txt', 'w')
-		for err in errors:
-			f.write(err[2:] + '\n\tCount: {0}\n'.format(self.count[errors.index(err)]))
-		f.close()
+		y = False
+		for x in exclusionList:
+			if x in error:
+				y = True
+		return y
