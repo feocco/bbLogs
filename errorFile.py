@@ -1,18 +1,19 @@
 import re
 
-class ErrorFile:
+class bbLog:
 	"""Class that stores Blackboard log files and their locations"""
 
 
 	def __init__(self, filename):
 		self.filename = filename
 		self.newName = self.filename[:-4] + '_formatted.txt'
-		self.dict = {} # "Error": [Quantity, Exclude]
+		self.dict = {}
 
 
 	def createDict(self):
-		errorID = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
-		regex = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')
+		errorIDReg = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
+		dateReg = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')
+		
 		errorString = ''
 
 		logFile = open(self.filename)
@@ -22,11 +23,11 @@ class ErrorFile:
 			if errorString == '':
 				# If error empty, add to errorString
 				errorString += str(line)
-			elif regex.search(line):
+			elif dateReg.search(line):
 				orig = errorString # Store original, full error
 				errLine = errorString.split('\n')[0][27:] # Strip error to 1 line
 				errorString = line # Begin new error
-				errLine = re.sub(errorID, '', errLine) # Remove ErrorID
+				errLine = re.sub(errorIDReg, '', errLine) # Remove errorIDReg
 				errLine = ''.join([i for i in errLine if not i.isdigit()]) # Remove #'s
 
 				if errLine not in self.dict:
