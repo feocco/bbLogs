@@ -7,3 +7,6 @@ Could not determine the course availability
 could not update grades for AR evaluation
 Optional.get() cannot be called on an absent value
 Error generating json for StreamEntry
+You do not have access to view this page
+Either you are not logged in or you do not have the appropriate privileges to perform this action.
+bb_learn_analytics: (information)

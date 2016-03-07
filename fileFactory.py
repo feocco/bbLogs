@@ -1,4 +1,4 @@
-import glob, os
+import os
 from errorFile import *
 
 class fileFactory:
@@ -9,10 +9,10 @@ class fileFactory:
 		self.bbFiles = self.getBbFiles()
 
 	def getBbFiles(self):
-		dirFiles = glob.glob('{0}/bb-*.txt'.format(self.directory))
+		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory) if re.search(r'bb-.+\.\d{4}-\d{2}-\d{2}.txt', f)]
 		bbFiles = []
 		for f in dirFiles:
-			answer = input("Format {0}?".format(f))
+			answer = input("Format: {0}?".format(f))
 			if answer[0].lower() == 'y':
 				bbFiles.append((f,True))
 			else:

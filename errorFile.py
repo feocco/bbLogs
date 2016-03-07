@@ -1,5 +1,4 @@
 import re
-import glob, os
 
 class bbLog:
 	"""Class that stores Blackboard log files and their locations"""
