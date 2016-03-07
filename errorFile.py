@@ -1,4 +1,5 @@
 import re
+import glob, os
 
 class bbLog:
 	"""Class that stores Blackboard log files and their locations"""
@@ -44,12 +45,12 @@ class bbLog:
 		logFile.close()
 
 		# Print test values
-		f = open(self.newName, 'w')
-		for key, value in self.dict.items():
-			# If Exclude == False, print to file
-			if not value[1]:
-				f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n')
-		f.close()
+		# f = open(self.newName, 'w')
+		# for key, value in self.dict.items():
+		# 	# If Exclude == False, print to file
+		# 	if not value[1]:
+		# 		f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n')
+		# f.close()
 
 
 	def checkExclusion(self, error):
@@ -59,3 +60,15 @@ class bbLog:
 			if x in error:
 				y = True
 		return y
+
+
+	def bbFiles(self, dir=os.getcwd()):
+		files = glob.glob('{0}/bb-*.txt'.format(dir))
+		result = []
+		for f in files:
+			answer = input("Format {0}?".format(f))
+			if answer[0].lower() == 'y':
+				result.append((f,True))
+			else:
+				result.append((f,False))
+		return result
