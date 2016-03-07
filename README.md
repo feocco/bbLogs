@@ -2,8 +2,8 @@
 
 Parse Blackboard Learn log files.
 
-Remove all error messages containing strings in the exclusionList
+Create error object for each unique error
+Check if error is in exclusion list
+Check quantity each error message appears
 
-Print all error messages, excluding their stack trace
-
-MindMap: https://i.imgur.com/XkIfT2u.png
+Provide formatted list with quantities
