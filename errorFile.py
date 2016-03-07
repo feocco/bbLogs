@@ -55,6 +55,6 @@ class bbLog:
 	def writeLog(self):
 		f = open(self.fileName[:-4] + '_formatted.txt', 'w')
 		for key, value in self.dict.items():
-			#if not value[1]:
-			f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n')
+			if not value[1]:
+				f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n')
 		f.close()
