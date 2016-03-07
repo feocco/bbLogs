@@ -6,3 +6,4 @@ Error in MyBbAction
 Could not determine the course availability
 could not update grades for AR evaluation
 Optional.get() cannot be called on an absent value
+Error generating json for StreamEntry
