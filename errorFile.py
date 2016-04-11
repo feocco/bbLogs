@@ -8,7 +8,6 @@ class bbLog:
 		self.fileName = fileName
 		self.dict = self.createDict()
 
-
 	def createDict(self):
 		myDict = {}
 		# RegEx Patterns
@@ -41,7 +40,6 @@ class bbLog:
 
 		return myDict
 
-
 	def checkExclusion(self, error):
 		exclusionList = [i.rstrip('\n') for i in open('exclusionList.txt')]
 		y = False
@@ -50,10 +48,13 @@ class bbLog:
 				y = True
 		return y
 
-
 	def writeLog(self):
 		f = open(self.fileName[:-4] + '_formatted.txt', 'w')
 		for key, value in self.dict.items():
 			if not value[1]:
 				f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n')
 		f.close()
+
+	def writeExclusionSummary(self):
+		pass
+		# Print the counts of excluded errors.

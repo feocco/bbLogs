@@ -8,12 +8,17 @@ class fileFactory:
 		self.directory = directory
 		self.bbFiles = self.getBbFiles()
 
+	def setDir(self):
+		self.directory = input('Please input a directory. \n The default directory, is the current working directory( {0} )'.format(self.directory))
+
 	def getBbFiles(self):
-		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory) if re.search(r'bb-.+\.\d{4}-\d{2}-\d{2}.txt', f)]
+		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory) if re.search(r'[b]{2}-\w+-log.*', f)]
 		bbFiles = []
 		for f in dirFiles:
 			answer = input("Format: {0}?".format(f))
-			if answer[0].lower() == 'y':
+			if len(answer) == 0:
+				bbFiles.append((f,False))
+			elif answer[0].lower() == 'y':
 				bbFiles.append((f,True))
 			else:
 				bbFiles.append((f,False))
@@ -21,14 +26,13 @@ class fileFactory:
 
 	def createInstances(self):
 		bbFiles = []
-		for bbFile, form in self.bbFiles:
-			if form:
+		for bbFile, doFormat in self.bbFiles:
+			if doFormat:
 				instance = bbLog(bbFile)
 				bbFiles.append(instance)
 		return bbFiles
 
 	def writeLogs(self):
 		bbFiles = self.createInstances()
-		print(str(bbFiles))
 		for bbLog in bbFiles:
 			bbLog.writeLog()
