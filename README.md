@@ -16,3 +16,10 @@ To use, execute the following commands in a python shell:
 
 The formatted files are then pushed to the working directory defined by fileFactory in the following format:
 * bb-logName-log_formatted.txt
+
+Example of formatting:
+```
+Error: 2015-12-01 11:31:23 -0800 - Failed to register distributor queue handler - java.lang.NullPointerException
+	Count: 4
+	Time of Occurence: '11:31:23', '12:07:34', '12:07:34'
+```
