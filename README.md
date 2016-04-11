@@ -1,9 +1,9 @@
 # bbLogs
 
-Parse Blackboard Learn log files.
+Parses Blackboard Learn log files that fit the bb-logName-log.txt format.
 
-Create error object for each unique error
-Check if error is in exclusion list
-Check quantity each error message appears
-
-Provide formatted list with quantities
+The formatted log file will include:
+* No error files which include a string from exclusionList.txt
+* First line of unique error messages
+** A count of this error message in the log
+** Time of each occurrence
