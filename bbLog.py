@@ -46,6 +46,7 @@ class bbLog:
 		for x in exclusionList:
 			if x in error:
 				y = True
+				break
 		return y
 
 	def writeLog(self):
