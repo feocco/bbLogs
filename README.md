@@ -11,7 +11,7 @@ The formatted log file will include:
 To use, execute the following commands in a python shell:
 * from fileFactory import *
 * files = fileFactory(r'C:\Users\jfeocco\Downloads\logs')
-** Respond y to each log file you want to parse
+	* Respond y to each log file you want to parse
 * files.writeLogs()
 
 The formatted files are then pushed to the working directory defined by fileFactory in the following format:
