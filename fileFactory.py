@@ -1,5 +1,5 @@
 import os
-from errorFile import *
+from bbLog import *
 
 class fileFactory:
 	"""Class for obtaining log files in a directory"""

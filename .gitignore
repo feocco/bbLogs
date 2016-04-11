@@ -37,3 +37,7 @@ bb-*.txt
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Other #
+######################
+testing.py
