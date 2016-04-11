@@ -22,17 +22,18 @@ class bbLog:
 				errorString += str(line)
 			elif dateReg.search(line): # If date pattern in line
 				orig = errorString # Store full error
-				errLine = errorString.split('\n')[0][27:] # Strip all lines
+				errLine = errorString.split('\n')[0][27:] # Strip date
 				errorString = line # Start new error
-				errLine = re.sub(errorIDReg, '', errLine) # RegEx Replace
+				errLine = re.sub(errorIDReg, '', errLine) # Replace RegEx patterns w/ ''
 				errLine = ''.join([i for i in errLine if not i.isdigit()]) # Remove #'s
 
 				if errLine not in myDict:
-					myDict[errLine] = [1, self.checkExclusion(orig), orig]
+					myDict[errLine] = [1, self.checkExclusion(orig), orig, []]
 				else:
-					a, b, c = myDict[errLine]
+					a, b, c, d = myDict[errLine]
 					a += 1 # Add 1 to count
-					myDict[errLine] = [a,b,c]
+					d.append(re.compile('\\d{2}:\\d{2}:\\d{2}').search(orig).group(0))
+					myDict[errLine] = [a,b,c,d]
 			else:
 				errorString += str(line)
 
@@ -53,7 +54,7 @@ class bbLog:
 		f = open(self.fileName[:-4] + '_formatted.txt', 'w')
 		for key, value in self.dict.items():
 			if not value[1]:
-				f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n')
+				f.write('Error: ' + value[2].split('\n')[0] + '\n\tCount: ' + str(value[0]) + '\n' + '\tTime of Occurence: ' + str(value[3]).strip('[]') + '\n\n')
 		f.close()
 
 	def writeExclusionSummary(self):
