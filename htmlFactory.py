@@ -5,7 +5,7 @@ import os
 # Capture our current directory
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def print_html_doc():
+def createTemplates():
 	# Create bbLog objects
 	files = fileFactory()
 	bbFiles = files.createInstances()
@@ -15,12 +15,20 @@ def print_html_doc():
 
 	# Set template we will use
 	template = env.get_template('newTemplate.html')
+	templates = []
 
 	for bbLog in bbFiles:
 		templateVars = bbLog.dict
-		return template.render(fileName=bbLog.fileName.split('\\')[1], templateVars=templateVars)
+		name = bbLog.fileName.split('\\')[1]
+		templates.append((name, template.render(fileName=name, templateVars=templateVars)))
 
+	return templates
+
+def print_html_docs(templates):
+	for temp in templates:
+		fileName = temp[0][:-4] + '.html'
+		with open(fileName, "w") as fh:
+			fh.write(temp[1])	
 
 if __name__ == '__main__':
-	with open("renderedTemplate.html", "w") as fh:
-		fh.write(print_html_doc())
+	print_html_docs(createTemplates())
