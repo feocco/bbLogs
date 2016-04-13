@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<style type="text/css">
+	tr, td
+	{
+		border: 1px solid black;
+	}
+	td.header
+	{
+		cursor: pointer;
+	}
+	td.stack
+	{
+		display: none;
+	}
+	</style>
+	<title>Parsed bbLog Report</title>
+	<script type='text/javascript'>//<![CDATA[
+	$(function(){
+	$('.header').click(function(){
+
+	$(this).nextUntil('tr.header').toggle();
+	});
+	});//]]> 
+	</script>
+</head>
+<body>
+	<table border='0'>
+		<tr>
+			<td> {{ fileName }} </td>
+		</tr>
+		{% for count, exclude, fullStack, timeStamps in templateVars.values() %}
+			<tr>
+				<td class="header"> > </td>
+				<td>{{ fullStack.split('\n', 1)[0]|e }}</td>
+				<td>{{ count|e }}</td>
+				<td class="stack">{{ fullStack|e }}</td>
+				<td class="stack">{{ timeStamps|e }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>
