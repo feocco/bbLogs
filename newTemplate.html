@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="https://rawgithub.com/padolsey/jQuery-Plugins/master/sortElements/jquery.sortElements.js"></script>
 	<style type="text/css">
 	tr, td
 	{
@@ -17,27 +18,54 @@
 		display: none;
 	}
 	</style>
-	<title>Parsed bbLog Report</title>
-	<script type='text/javascript'>//<![CDATA[
+	<title>{{ fileName }} Summary Report</title>
+	<script type='text/javascript'>
 	$(function(){
 	$('.header').click(function(){
-
 	$(this).nextUntil('tr.header').toggle();
 	});
-	});//]]> 
+	 var table = $('table');
+    $('#1_header, #2_header')
+        .wrapInner('<span title="sort this column"/>')
+        .each(function(){
+            var th = $(this),
+                thIndex = th.index(),
+                inverse = false;
+            th.click(function(){
+                table.find('td').filter(function(){
+                    return $(this).index() === thIndex;
+                }).sortElements(function(a, b){
+					a = $(a).text();
+					b = $(b).text();
+					return (
+						isNaN(a) || isNaN(b) ?
+						a > b : +a > +b
+					) ?
+						inverse ? -1 : 1 :
+						inverse ? 1 : -1;
+                }, function(){
+                    // parentNode is the element we want to move
+                    return this.parentNode; 
+                });
+                inverse = !inverse;  
+            });
+        });
+	});
 	</script>
 </head>
 <body>
 	<table border='0'>
 		<tr>
-			<td> {{ fileName }} </td>
+			<td> Expand Stack </td>
+			<th class="header" id='1_header'>Error</th>
+			<th class="header" id='2_header'>Count</th>
 		</tr>
 		{% for count, exclude, fullStack, timeStamps in templateVars.values() %}
 			<tr>
 				<td class="header"> > </td>
 				<td>{{ fullStack.split('\n', 1)[0]|e }}</td>
 				<td>{{ count|e }}</td>
-				<td class="stack">{{ fullStack|e }}</td>
+				<td class="stack">{{ fullStack.replace('\n', '<br />') }}</td>
 				<td class="stack">{{ timeStamps|e }}</td>
 			</tr>
 		{% endfor %}
