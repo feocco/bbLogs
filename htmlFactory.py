@@ -18,7 +18,7 @@ def print_html_doc():
 
 	for bbLog in bbFiles:
 		templateVars = bbLog.dict
-		return template.render(filename=bbLog.fileName, templateVars=templateVars)
+		return template.render(fileName=bbLog.fileName.split('\\')[1], templateVars=templateVars)
 
 
 if __name__ == '__main__':
