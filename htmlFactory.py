@@ -5,9 +5,9 @@ import os
 # Capture our current directory
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def createTemplates():
+def createTemplates(directory=os.getcwd()):
 	# Create bbLog objects
-	files = fileFactory()
+	files = fileFactory(directory)
 	bbFiles = files.createInstances()
 
 	# Create the ninja environment and load files from this directory
@@ -20,15 +20,22 @@ def createTemplates():
 	for bbLog in bbFiles:
 		templateVars = bbLog.dict
 		name = bbLog.fileName.split('\\')[1]
-		templates.append((name, template.render(fileName=name, templateVars=templateVars)))
+		templates.append((bbLog.fileName, template.render(fileName=name, templateVars=templateVars)))
 
 	return templates
 
-def print_html_docs(templates):
+def print_html_docs(templates, inDir=True):
 	for temp in templates:
-		fileName = temp[0][:-4] + '.html'
+		if inDir:
+			fileName = temp[0].split('\\')[1][:-4] + '.html'
+		else:
+			fileName = temp[0][:-4] + '.html'
 		with open(fileName, "w") as fh:
 			fh.write(temp[1])	
 
 if __name__ == '__main__':
-	print_html_docs(createTemplates())
+	directory = input("Input directory of log files or press [ENTER] for current directory:\n")
+	if len(directory) == 0:
+		print_html_docs(createTemplates())
+	else:
+		print_html_docs(createTemplates(directory), False)
