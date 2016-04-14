@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- CSS taken from http://www.textfixer.com/tutorials/css-tables.php -->
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="https://rawgithub.com/padolsey/jQuery-Plugins/master/sortElements/jquery.sortElements.js"></script>
@@ -17,6 +18,32 @@
 	{
 		display: none;
 		vertical-align: top;
+	}
+	table.altrowstable {
+		font-family: verdana,arial,sans-serif;
+		font-size:11px;
+		color:#333333;
+		border-width: 1px;
+		border-color: #a9c6c9;
+		border-collapse: collapse;
+	}
+	table.altrowstable th {
+		border-width: 1px;
+		padding: 8px;
+		border-style: solid;
+		border-color: #a9c6c9;
+	}
+	table.altrowstable td {
+		border-width: 1px;
+		padding: 8px;
+		border-style: solid;
+		border-color: #a9c6c9;
+	}
+	.oddrowcolor{
+		background-color:#d4e3e5;
+	}
+	.evenrowcolor{
+		background-color:#c3dde0;
 	}
 	</style>
 	<title>{{ fileName }} Summary Report</title>
@@ -53,9 +80,29 @@
         });
 	});
 	</script>
+	<script type="text/javascript">
+	function altRows(id){
+		if(document.getElementsByTagName){  
+			
+			var table = document.getElementById(id);  
+			var rows = table.getElementsByTagName("tr"); 
+			 
+			for(i = 0; i < rows.length; i++){          
+				if(i % 2 == 0){
+					rows[i].className = "evenrowcolor";
+				}else{
+					rows[i].className = "oddrowcolor";
+				}      
+			}
+		}
+	}
+	window.onload=function(){
+		altRows('alternatecolor');
+	}
+	</script>
 </head>
 <body>
-	<table border='0'>
+	<table class="altrowstable" id="alternatecolor" border='0'>
 		<tr>
 			<td> Expand Stack </td>
 			<th class="header" id='1_header'>Error</th>
