@@ -13,13 +13,7 @@ class fileFactory:
 		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory) if re.search(r'[b]{2}-\w+-log.txt', f)]
 		bbFiles = []
 		for f in dirFiles:
-			answer = input("Format: {0}?\nResponse(y/n): ".format(f))
-			if len(answer) == 0:
-				bbFiles.append((f,False))
-			elif answer[0].lower() == 'y':
-				bbFiles.append((f,True))
-			else:
-				bbFiles.append((f,False))
+			bbFiles.append((f,True))
 		return bbFiles
 
 	def createInstances(self):
