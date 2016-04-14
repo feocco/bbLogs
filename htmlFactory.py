@@ -19,7 +19,7 @@ def createTemplates(directory=os.getcwd()):
 
 	for bbLog in bbFiles:
 		templateVars = bbLog.dict
-		name = bbLog.fileName.split('\\')[1]
+		name = bbLog.fileName.split('\\')[-1]
 		templates.append((bbLog.fileName, template.render(fileName=name, templateVars=templateVars)))
 
 	return templates
