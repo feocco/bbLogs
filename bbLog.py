@@ -28,12 +28,13 @@ class bbLog:
 				errLine = ''.join([i for i in errLine if not i.isdigit()]) # Remove #'s
 
 				if errLine not in myDict:
-					myDict[errLine] = [1, self.checkExclusion(orig), orig, []]
+					if not self.exclude(orig):
+						myDict[errLine] = [1, orig, []]
 				else:
-					a, b, c, d = myDict[errLine]
+					a, c, d = myDict[errLine]
 					a += 1 # Add 1 to count
 					d.append(re.compile('\\d{2}:\\d{2}:\\d{2}').search(orig).group(0))
-					myDict[errLine] = [a,b,c,d]
+					myDict[errLine] = [a,c,d]
 			else:
 				errorString += str(line)
 
@@ -41,11 +42,11 @@ class bbLog:
 
 		return myDict
 
-	def checkExclusion(self, error):
+	def exclude(self, error):
 		exclusionList = [i.rstrip('\n') for i in open('exclusionList.txt')]
 		y = False
 		for x in exclusionList:
-			if x in error:
+			if str(x) in error:
 				y = True
 				break
 		return y

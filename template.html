@@ -133,7 +133,7 @@
 			<th class="header2" id='1_header'>Error Message - First Instance<sup>Sortable</sup></th>
 			<th class="header2" id='2_header'>Error Count <sup>Sortable</sup></th>
 		</tr>
-		{% for count, exclude, fullStack, timeStamps in templateVars.values() %}
+		{% for count, fullStack, timeStamps in templateVars.values() %}
 			<tr>
 				<td class="header"> > </td>
 				<td>{{ fullStack.split('\n', 1)[0]|e }}</td>
