@@ -10,7 +10,7 @@ class fileFactory:
 		self.bbFiles = self.getBbFiles()
 
 	def getBbFiles(self):
-		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory) if re.search(r'[b]{2}-\w+-log.*', f)]
+		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory) if re.search(r'[b]{2}-\w+-log.txt', f)]
 		bbFiles = []
 		for f in dirFiles:
 			answer = input("Format: {0}?\nResponse(y/n): ".format(f))
