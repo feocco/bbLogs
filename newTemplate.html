@@ -7,7 +7,6 @@
 	<script type="text/javascript" src="https://rawgithub.com/padolsey/jQuery-Plugins/master/sortElements/jquery.sortElements.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<style type="text/css">
 	tr, td
@@ -114,7 +113,7 @@
 	    </div>
 	    <ul class="nav navbar-nav">
 	      {% for file in fileList %}
-	      <li><a href="/{{ file[:-4] }}.html">{{ file.split('\\')[-1] }}</a></li>
+	      <li><a href="/{{ file.replace('cygdrive/c', 'C:')[:-4] }}.html">{{ file.split('\\')[-1] }}</a></li>
 	      {% endfor %}
 	    </ul>
 	  </div>
