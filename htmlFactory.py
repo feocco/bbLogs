@@ -24,7 +24,7 @@ def createTemplates(directory=os.getcwd()):
 
 	return templates
 
-def print_html_docs(templates, inDir=True):
+def printHtmlDocs(templates, inDir=True):
 	for temp in templates:
 		if inDir:
 			fileName = temp[0].split('\\')[- 1][:-4] + '.html'
@@ -36,6 +36,6 @@ def print_html_docs(templates, inDir=True):
 if __name__ == '__main__':
 	directory = input("Input directory of log files or press [ENTER] for current directory:\n")
 	if len(directory) == 0:
-		print_html_docs(createTemplates())
+		printHtmlDocs(createTemplates())
 	else:
-		print_html_docs(createTemplates(directory), False)
+		printHtmlDocs(createTemplates(directory), False)
