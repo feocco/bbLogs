@@ -14,7 +14,7 @@ def createTemplates(directory=os.getcwd()):
 	env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
 
 	# Set template we will use
-	template = env.get_template('newTemplate.html')
+	template = env.get_template('template.html')
 	templates = []
 	fileList = []
 
