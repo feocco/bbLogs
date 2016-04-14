@@ -27,7 +27,7 @@ def createTemplates(directory=os.getcwd()):
 def print_html_docs(templates, inDir=True):
 	for temp in templates:
 		if inDir:
-			fileName = temp[0].split('\\')[1][:-4] + '.html'
+			fileName = temp[0].split('\\')[- 1][:-4] + '.html'
 		else:
 			fileName = temp[0][:-4] + '.html'
 		with open(fileName, "w") as fh:
