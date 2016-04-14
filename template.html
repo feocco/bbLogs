@@ -20,7 +20,7 @@
 	tr:hover {
 		background-color: white;
 	}
-	td.header{
+	td.header, th{
 		cursor: pointer;
 	}
 	th.header2{
@@ -64,6 +64,9 @@
 	$('.header').click(function(){
 	$(this).nextUntil('tr.header').toggle();
 	});
+	$('th.expall').click(function(){
+	$('.header').nextUntil('').toggle();
+	});
 	 var table = $('table');
     $('#1_header, #2_header')
         .wrapInner('<span title="Click to sort!"/>')
@@ -88,6 +91,7 @@
                     return this.parentNode; 
                 });
                 inverse = !inverse;  
+                altRows('alternatecolor');
             });
         });
 	});
@@ -129,7 +133,7 @@
 	</nav>
 	<table class="altrowstable" id="alternatecolor" border='0'>
 		<tr>
-			<td> Expand Stack </td>
+			<th class='expall'> Expand All </td>
 			<th class="header2" id='1_header'>Error Message - First Instance<sup>Sortable</sup></th>
 			<th class="header2" id='2_header'>Error Count <sup>Sortable</sup></th>
 		</tr>
