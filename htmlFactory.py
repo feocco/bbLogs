@@ -1,6 +1,8 @@
+import os
 from jinja2 import Environment, FileSystemLoader
 from fileFactory import *
-import os
+from tkinter import *
+from tkinter.filedialog import askdirectory      
 
 # Capture our current directory
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -37,9 +39,15 @@ def printHtmlDocs(templates, inDir=True):
 		with open(fileName, "w") as fh:
 			fh.write(temp[1])	
 
-if __name__ == '__main__':
-	directory = input("Input directory of log files or press [ENTER] for current directory:\n")
+def callback():
+	directory = askdirectory() 
 	if len(directory) == 0:
 		printHtmlDocs(createTemplates())
 	else:
 		printHtmlDocs(createTemplates(directory), False)
+	root.destroy()
+
+if __name__ == '__main__':
+	root = Tk()
+	Button(root, text='Select Log Directory', command=callback).pack(fill=X)
+	mainloop()
