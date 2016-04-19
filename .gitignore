@@ -43,3 +43,4 @@ Thumbs.db
 testing.py
 renderedTemplate.html
 bb-*
+dist/
