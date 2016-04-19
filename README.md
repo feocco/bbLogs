@@ -17,6 +17,7 @@ To use:
 * Select Directory where logs reside > Press Ok
 * Wait for parsing to complete, should be logged in CMD window
   * GUI looks awful. I know.
+* Log directory will now contain HTML reports for each log. Open em up!
 
 Example Output:
 * https://i.imgur.com/oFnsM87.png
