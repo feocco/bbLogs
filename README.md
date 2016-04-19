@@ -8,12 +8,15 @@ The error message is listed initially with an option to expand the stack.
 A nav bar is created to access each log file parsed
 The table is sortable by first time of occurrence(Error) and Count. 
 
-I'm still developing this project and will work towards a standalone app soon. For now, use the following steps to parse files:
-* Install Python 3.4+
-* Clone project & cd into directory
-* cmd: python htmlFactory.py
-* Input log file directory or press enter to parse log files in current directory
-* Open the HTML generated in the log directory
+This is a work in progress. I'll need to add error handling and fine tune the GUI. It doesn't work how I'd like it to right now. 
+
+To use:
+* Download: https://github.com/feocco/bbLogs/blob/master/bbLog1.0.zip?raw=true
+* Unzip package
+* Open bbLog.exe
+* Select Directory where logs reside > Press Ok
+* Wait for parsing to complete, should be logged in CMD window
+  * GUI looks awful. I know.
 
 Example Output:
-* https://i.imgur.com/yC8yodT.png
+* https://i.imgur.com/oFnsM87.png
