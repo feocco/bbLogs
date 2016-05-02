@@ -1,6 +1,7 @@
 import os
 import datetime
 from bbLog import *
+from time import sleep
 
 class fileFactory:
 	"""Class for obtaining log files in a directory"""
@@ -23,4 +24,5 @@ class fileFactory:
 				print('{0} : Parsing {1}'.format(datetime.datetime.now(), bbFile))
 				instance = bbLog(bbFile)
 				bbFiles.append(instance)
+		sleep(2)
 		return bbFiles

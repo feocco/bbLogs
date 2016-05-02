@@ -36,7 +36,7 @@ def printHtmlDocs(templates, inDir=True):
 			fileName = temp[0].split('\\')[- 1][:-4] + '.html'
 		else:
 			fileName = temp[0][:-4] + '.html'
-		with open(fileName, "w") as fh:
+		with open(fileName, "w", encoding="utf8") as fh:
 			fh.write(temp[1])	
 
 def callback():

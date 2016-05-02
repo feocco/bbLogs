@@ -14,7 +14,7 @@ class bbLog:
 		errorIDReg = re.compile(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}')
 		dateReg = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} -\d{4}')
 		
-		logFile = open(self.fileName)
+		logFile = open(self.fileName, encoding="utf8")
 		errorString = ''
 
 		for line in logFile:
