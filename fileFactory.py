@@ -11,10 +11,11 @@ class fileFactory:
 		self.bbFiles = self.getBbFiles()
 
 	def getBbFiles(self):
-		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory) if re.search(r'[b]{2}-\w+-log.*.txt', f)]
+		dirFiles = [self.directory + '\\' + f for f in os.listdir(self.directory)]
 		bbFiles = []
 		for f in dirFiles:
-			bbFiles.append((f,True))
+			if re.search(r'[b]{2}-\w+-log.*.txt', f) and not re.search(r'[b]{2}-access-log.*.txt', f):
+				bbFiles.append((f,True))
 		return bbFiles
 
 	def createInstances(self):
