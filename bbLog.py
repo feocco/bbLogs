@@ -1,4 +1,5 @@
 import re
+import xml.etree.ElementTree as etree
 
 class bbLog:
 	"""Class that stores Blackboard log files and their locations"""
@@ -43,10 +44,13 @@ class bbLog:
 		return myDict
 
 	def exclude(self, error):
-		exclusionList = [i.rstrip('\n') for i in open('exclusionList.txt')]
+		xml = etree.parse('knownIssues.xml')
+		root = xml.getroot()
 		y = False
-		for x in exclusionList:
-			if str(x) in error:
+		
+		for issue in root.findall('issue'):
+			keyword = issue.find('keywords').text
+			if keyword in error:
 				y = True
 				break
 		return y

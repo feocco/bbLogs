@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues>
+	<issue name='Repeated Data Integration Lucene Indexing Log Messages'>
+		<severity>WARNING</severity>
+		<keywords>data_integration_log</keywords>
+		<description>Log spam</description>
+		<url>https://blackboard.secure.force.com/btbb_articleview?id=kA370000000H9vN</url>
+		<recommendation>Following workaround in: https://silicon.pd.local:8443/display/TIER3/SIS+Logging+and+Lucene+Index+Reset</recommendation>
+	</issue>
+	<issue name='Admin Console Messages'>
+		<severity>INFO</severity>
+		<keywords>rows have been deleted from old</keywords>
+		<description>This is a non-issue</description>
+		<url></url>
+		<recommendation></recommendation>
+	</issue>
+	<issue name='Replies to Discussion Board Posts do not Show in My Blackboard Posts Tool'>
+		<severity>WARN</severity>
+		<keywords>Error generating json for StreamEntry</keywords>
+		<description>This could be one of multiple issues, confirm via the logs</description>
+		<url>https://blackboard.secure.force.com/btbb_articleview?id=kA370000000H6gz</url>
+		<recommendation>Check for error messages with the keyword and search the error in BtBB or SF</recommendation>
+	</issue>
+</issues>
