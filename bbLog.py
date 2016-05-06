@@ -7,6 +7,7 @@ class bbLog:
 
 	def __init__(self, fileName):
 		self.fileName = fileName
+		self.exclusionsList = []
 		self.dict = self.createDict()
 
 	def createDict(self):
@@ -46,11 +47,24 @@ class bbLog:
 	def exclude(self, error):
 		xml = etree.parse('knownIssues.xml')
 		root = xml.getroot()
-		y = False
-		
+
+		exclude = False
+		addExclusion = True
+
 		for issue in root.findall('issue'):
 			keyword = issue.find('keywords').text
+
 			if keyword in error:
-				y = True
+				exclude = True
+
+				for ex in self.exclusionsList:
+					if keyword in ex:
+						addExclusion = False
+
+			if addExclusion and exclude:
+				# [severity, fullError, description, url, recommendation, keyword]
+				excludeList = [issue.find('severity').text, error, issue.find('description').text, issue.find('url').text, issue.find('recommendation').text, keyword]
+				self.exclusionsList.append(excludeList)
 				break
-		return y
+		
+		return exclude
