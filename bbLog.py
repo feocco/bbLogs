@@ -62,8 +62,7 @@ class bbLog:
 						addExclusion = False
 
 			if addExclusion and exclude:
-				# [severity, fullError, description, url, recommendation, keyword]
-				excludeList = [issue.find('severity').text, error, issue.find('description').text, issue.find('url').text, issue.find('recommendation').text, keyword]
+				excludeList = [issue.find('severity').text, error, issue.find('description').text, issue.find('url').text, issue.find('recommendation').text, keyword, issue.attrib["name"]]
 				self.exclusionsList.append(excludeList)
 				break
 		

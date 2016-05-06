@@ -24,7 +24,7 @@ def createTemplates(directory=os.getcwd()):
 		fileList.append(bbLog.fileName)
 
 	for bbLog in bbFiles:
-		templateVars = bbLog.dict
+		templateVars = [bbLog.dict, bbLog.exclusionsList]
 		name = bbLog.fileName.split('\\')[-1]
 		templates.append((bbLog.fileName, template.render(fileList=fileList, fileName=name, templateVars=templateVars)))
 
