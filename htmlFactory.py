@@ -41,11 +41,11 @@ def printHtmlDocs(templates, inDir=True):
 
 def callback():
 	directory = askdirectory() 
+	root.destroy()
 	if len(directory) == 0:
 		printHtmlDocs(createTemplates())
 	else:
 		printHtmlDocs(createTemplates(directory), False)
-	root.destroy()
 
 if __name__ == '__main__':
 	root = Tk()
