@@ -38,6 +38,9 @@
 		border-width: 1px;
 		border-color: #a9c6c9;
 		border-collapse: collapse;
+		table-layout: fixed;
+		width: 100%;
+		word-wrap: break-word;
 	}
 	table.altrowstable th {
 		border-width: 1px;
@@ -134,9 +137,9 @@
 	<table class="altrowstable" id="alternatecolor" border='0'>
 		<caption>Error Summary</caption>
 		<tr>
-			<th class='expall'> Expand All </td>
+			<th class='expall' width="65"> Expand All </td>
 			<th class="header2" id='1_header'>Error Message - First Instance<sup>Sortable</sup></th>
-			<th class="header2" id='2_header'>Error Count <sup>Sortable</sup></th>
+			<th class="header2" id='2_header' width="58">Error Count <sup>Sortable</sup></th>
 		</tr>
 		{% for count, fullStack, timeStamps in templateVars[0].values() %}
 			<tr>
