@@ -21,4 +21,67 @@
 		<url>https://blackboard.secure.force.com/btbb_articleview?id=kA370000000H6gz</url>
 		<recommendation>Check for error messages with the keyword and search the error in BtBB or SF</recommendation>
 	</issue>
+	<issue name='Uninstalled Building Block Leaves Course_toc Entries that Cause Log Spam'>
+		<severity>WARN</severity>
+		<keywords>An error occurred while loading the toc named</keywords>
+		<description></description>
+		<url>https://blackboard.secure.force.com/btbb_articleview?id=kA370000000GsYx</url>
+		<recommendation>Ignore them, they're log spam.</recommendation>
+	</issue>
+	<issue name='Log spam - Cloud errors.'>
+		<severity>WARN</severity>
+		<keywords>Error in MyBbAction</keywords>
+		<description></description>
+		<url>http://jira.bbpd.io/browse/LRNSI-22030</url>
+		<recommendation>Not sure. Open ticket with Cloud team maybe? Fix: http://goo.gl/1PnBdE</recommendation>
+	</issue>
+	<issue name='Course Availability Log Spam'>
+		<severity>WARN</severity>
+		<keywords>Could not determine the course availability</keywords>
+		<description></description>
+		<url></url>
+		<recommendation>Log spam. Not sure what it's caused by. Not reported in an SI or bug.</recommendation>
+	</issue>
+	<issue name='Guest User Log Spam'>
+		<severity>WARN</severity>
+		<keywords>could not update grades for AR evaluation</keywords>
+		<description></description>
+		<url>https://jira.bbpd.io:8443/browse/LRNSI-6461</url>
+		<recommendation>Log spam, ignore. Basically such messages are logged when a guest is viewing allowed content in a course in which he is not enrolled</recommendation>
+	</issue>
+	<issue name='Multiple Entries of Error While Getting Cached Result for Key Error'>
+		<severity>WARN</severity>
+		<keywords>Optional.get() cannot be called on an absent value</keywords>
+		<description></description>
+		<url>https://blackboard.secure.force.com/btbb_articleview?id=kA3700000004EZ7</url>
+		<recommendation>Log spam, ignore it.</recommendation>
+	</issue>
+	<issue name='My Blackboard Updates Tool Does Not Display Update Details'>
+		<severity>WARN</severity>
+		<keywords>Error generating json for StreamEntry</keywords>
+		<description></description>
+		<url>https://blackboard.secure.force.com/btbb_articleview?id=kA370000000H4up</url>
+		<recommendation>One of multiple issues. Log spam though. Articles: 000040159, 000039702, 000038226</recommendation>
+	</issue>
+	<issue name='Permissions Errors'>
+		<severity>WARN</severity>
+		<keywords>You do not have access to view this page</keywords>
+		<description></description>
+		<url></url>
+		<recommendation>Permissions issue. Ignore.</recommendation>
+	</issue>
+	<issue name='Permissions Errors 2'>
+		<severity>WARN</severity>
+		<keywords>Either you are not logged in or you do not have the appropriate privileges to perform this action.</keywords>
+		<description></description>
+		<url></url>
+		<recommendation>Permissions issue. Ignore.</recommendation>
+	</issue>
+	<issue name='Analytics Info'>
+		<severity>INFO</severity>
+		<keywords>bb_learn_analytics: (information)</keywords>
+		<description></description>
+		<url></url>
+		<recommendation>INFO messages which can be ignored.</recommendation>
+	</issue>
 </issues>
