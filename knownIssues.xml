@@ -11,7 +11,7 @@
 		<severity>INFO</severity>
 		<keywords>rows have been deleted from old</keywords>
 		<description>This is a non-issue</description>
-		<url></url>
+		<url>#</url>
 		<recommendation></recommendation>
 	</issue>
 	<issue name='Replies to Discussion Board Posts do not Show in My Blackboard Posts Tool'>
@@ -39,7 +39,7 @@
 		<severity>WARN</severity>
 		<keywords>Could not determine the course availability</keywords>
 		<description></description>
-		<url></url>
+		<url>#</url>
 		<recommendation>Log spam. Not sure what it's caused by. Not reported in an SI or bug.</recommendation>
 	</issue>
 	<issue name='Guest User Log Spam'>
@@ -67,21 +67,21 @@
 		<severity>WARN</severity>
 		<keywords>You do not have access to view this page</keywords>
 		<description></description>
-		<url></url>
+		<url>#</url>
 		<recommendation>Permissions issue. Ignore.</recommendation>
 	</issue>
 	<issue name='Permissions Errors 2'>
 		<severity>WARN</severity>
 		<keywords>Either you are not logged in or you do not have the appropriate privileges to perform this action.</keywords>
 		<description></description>
-		<url></url>
+		<url>#</url>
 		<recommendation>Permissions issue. Ignore.</recommendation>
 	</issue>
 	<issue name='Analytics Info'>
 		<severity>INFO</severity>
 		<keywords>bb_learn_analytics: (information)</keywords>
 		<description></description>
-		<url></url>
+		<url>#</url>
 		<recommendation>INFO messages which can be ignored.</recommendation>
 	</issue>
 </issues>
