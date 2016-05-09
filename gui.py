@@ -3,6 +3,14 @@ from tkinter import ttk
 from tkinter.filedialog import askdirectory, askopenfilename
 from htmlFactory import *
 
+def popup():
+	top = Toplevel(root)
+	msg = Message(top, text="Finished!")
+	msg.pack()
+
+	button = Button(top, text="Close", command=root.destroy)
+	button.pack()
+
 def getDir():
 	directory = askdirectory()
 
@@ -11,14 +19,13 @@ def getDir():
 	else:
 		printHtmlDocs(createTemplates(directory), False)
 
-	root.destroy()
+	popup()
 
 def getFile():
 	fileName = askopenfilename()
 
 	printHtmlDocs(createTemplate(fileName), False)
-
-	root.destroy()
+	popup()
 
 root = Tk()
 root.title("Bb Log Parser")
