@@ -84,4 +84,11 @@
 		<url>#</url>
 		<recommendation>INFO messages which can be ignored.</recommendation>
 	</issue>
+	<issue name='Unable to remove file'>
+		<severity>WARN</severity>
+		<keywords>Unable to remove \\</keywords>
+		<description></description>
+		<url>#</url>
+		<recommendation>Unable to remove file messages which can PROBABLY be ignored.</recommendation>
+	</issue>
 </issues>
