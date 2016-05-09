@@ -22,8 +22,6 @@ class fileFactory:
 		bbFiles = []
 		for bbFile, doFormat in self.bbFiles:
 			if doFormat:
-				print('{0} : Parsing {1}'.format(datetime.datetime.now(), bbFile))
 				instance = bbLog(bbFile)
 				bbFiles.append(instance)
-		sleep(2)
 		return bbFiles

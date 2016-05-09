@@ -1,8 +1,7 @@
 import os
+from bbLog import *
 from jinja2 import Environment, FileSystemLoader
 from fileFactory import *
-from tkinter import *
-from tkinter.filedialog import askdirectory      
 
 # Capture our current directory
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -30,6 +29,18 @@ def createTemplates(directory=os.getcwd()):
 
 	return templates
 
+def createTemplate(fileName):
+	# Create the ninja environment and load files from this directory
+	env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
+	template = env.get_template('template.html')
+
+	bbLogVar = bbLog(fileName)
+	templateVars = [bbLogVar.dict, bbLogVar.exclusionsList]
+	name = bbLogVar.fileName.split('\\')[-1]
+	
+	return [(bbLogVar.fileName, template.render(fileList=[name], fileName=name, templateVars=templateVars))]
+
+
 def printHtmlDocs(templates, inDir=True):
 	for temp in templates:
 		if inDir:
@@ -37,17 +48,4 @@ def printHtmlDocs(templates, inDir=True):
 		else:
 			fileName = temp[0][:-4] + '.html'
 		with open(fileName, "w", encoding="utf8") as fh:
-			fh.write(temp[1])	
-
-def callback():
-	directory = askdirectory() 
-	root.destroy()
-	if len(directory) == 0:
-		printHtmlDocs(createTemplates())
-	else:
-		printHtmlDocs(createTemplates(directory), False)
-
-if __name__ == '__main__':
-	root = Tk()
-	Button(root, text='Select Log Directory', command=callback).pack(fill=X)
-	mainloop()
+			fh.write(temp[1])
