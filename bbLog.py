@@ -1,5 +1,6 @@
 import re
 import xml.etree.ElementTree as etree
+import os
 
 class bbLog:
 	"""Class that stores Blackboard log files and their locations"""
@@ -45,7 +46,12 @@ class bbLog:
 		return myDict
 
 	def exclude(self, error):
-		xml = etree.parse('knownIssues.xml')
+		filename = 'knownIssues.xml'
+
+		if '_MEIPASS2' in os.environ:
+			filename = os.path.join(os.environ['_MEIPASS2'], filename)
+
+		xml = etree.parse(filename)
 		root = xml.getroot()
 
 		exclude = False

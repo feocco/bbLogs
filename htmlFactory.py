@@ -1,10 +1,14 @@
-import os
+import os, sys
 from bbLog import *
 from jinja2 import Environment, FileSystemLoader
 from fileFactory import *
 
-# Capture our current directory
-THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+# Capture our current directory. Pyinstaller --onefile taken into account.
+# First THIS_DIR only works for PyInstaller exe
+if 'python.exe' in sys.executable:
+	THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+else:
+	THIS_DIR = os.path.join(os.path.dirname(sys.executable))
 
 def createTemplates(directory=os.getcwd()):
 	# Create bbLog objects
