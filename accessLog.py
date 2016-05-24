@@ -12,9 +12,9 @@ class accessLog:
 		ipAddressReg = re.compile(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b')
 		userPk1Reg = re.compile(r'\s_(\d*)_1\s')
 		timestampReg = re.compile(r'\d\d/\w+/\d{4}:\d\d:\d\d:\d\d')
-		requestReg = re.compile(r'\"(.*)HTTP/1.1\"')
-		httpStatusReg = re.compile(r'HTTP/1.1"\s(\d\d\d)')
-		ttsReg = re.compile(r'HTTP/1.1"\s\d\d\d\s(\d* |-)')
+		requestReg = re.compile(r'\"(.*)HTTP/\d.\d\"')
+		httpStatusReg = re.compile(r'HTTP/\d.\d"\s\d\d\d')
+		ttsReg = re.compile(r'HTTP/\d.\d"\s\d\d\d\s(-|\d*)')
 
 		myDict = {}
 		
@@ -26,8 +26,9 @@ class accessLog:
 			userPk1	= self.returnMatch(userPk1Reg, line)
 			timestamp = self.returnMatch(timestampReg, line)
 			request = self.returnMatch(requestReg, line)
-			httpStatus = self.returnMatch(httpStatusReg, line)
-			tts = self.returnMatch(ttsReg, line)
+			httpStatus = self.returnMatch(httpStatusReg, line)[-3:]
+			# TTS isn't correct. I think it's bytes to serve. 
+			tts = self.returnMatch(ttsReg, line)[-1]
 
 			if request in myDict:
 				# Unpack values, append duplicate request's values, repack. 
@@ -47,6 +48,8 @@ class accessLog:
 		result = regex.search(data)
 		if result:
 			return result.group(0)
+		else:
+			return ''
 
 a = accessLog(r'D:\Downloads\02327934\p001a\bb-access-log.2016-05-12_p001a.txt')
 
