@@ -50,3 +50,45 @@ class accessLog:
 			return result.group(0)
 		else:
 			return ''
+
+	# Functions / Goals:
+	# - Log Size
+	# - Top requests sorted by hits
+	# - Unique visitors/users sorted by hits (IP or User_ID)
+	# - Top HTTP Status Codes sorted by hits
+
+	def requestStats(self):
+		# Valid Requests / Total Requests
+		validRequests = 0
+		totalRequsts = 0
+		for request, values in self.dict.items():
+			httpStatus = values[3]
+			for status in httpStatus:
+				if status != '404':
+					totalRequsts += 1
+					validRequests += 1
+				else:
+					totalRequsts += 1
+		
+		return (validRequests, totalRequsts)
+
+	def count404(self):
+		# Failed requests(404)
+		pass
+
+	def uniqueVisitors(self):
+		# Unique Visitors
+		pass
+
+	def peakHourly(self):
+		# Peak hits by hour
+		pass
+
+a = accessLog(r'D:\Downloads\02327934\p001a\bb-access-log.2016-05-12_p001a.txt')
+
+# for key, values in a.dict.items():
+# 	print(key, 'Count: ', len(values[0]))
+# 	print(values)
+# 	print('\n--')
+print(a)
+print(a.requestStats())
