@@ -59,6 +59,7 @@ class accessLog:
 
 	def requestStats(self):
 		# Valid Requests / Total Requests
+		# Should we expand this from 404 to all 400 / 500 errors? 
 		validRequests = 0
 		totalRequsts = 0
 		for request, values in self.dict.items():
@@ -77,18 +78,16 @@ class accessLog:
 		pass
 
 	def uniqueVisitors(self):
-		# Unique Visitors
-		pass
+		# Returns count of unique user pk1's for entire log
+		uniqueVisitors = []
+		for request, values in self.dict.items():
+			visitors = values[1]
+			for visitor in visitors:
+				if visitor not in uniqueVisitors:
+					uniqueVisitors.append(visitor)
+
+		return len(uniqueVisitors)
 
 	def peakHourly(self):
 		# Peak hits by hour
 		pass
-
-a = accessLog(r'D:\Downloads\02327934\p001a\bb-access-log.2016-05-12_p001a.txt')
-
-# for key, values in a.dict.items():
-# 	print(key, 'Count: ', len(values[0]))
-# 	print(values)
-# 	print('\n--')
-print(a)
-print(a.requestStats())
