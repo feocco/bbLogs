@@ -50,10 +50,3 @@ class accessLog:
 			return result.group(0)
 		else:
 			return ''
-
-a = accessLog(r'D:\Downloads\02327934\p001a\bb-access-log.2016-05-12_p001a.txt')
-
-for key, values in a.dict.items():
-	print(key, 'Count: ', len(values[0]))
-	print(values)
-	print('\n--')
