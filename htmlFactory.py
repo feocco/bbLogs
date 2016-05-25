@@ -13,7 +13,7 @@ else:
 def createTemplates(directory=os.getcwd()):
 	# Create bbLog objects
 	files = fileFactory(directory)
-	bbFiles = files.createInstances()
+	files = files.createInstances()
 
 	# Create the ninja environment and load files from this directory
 	env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
@@ -23,13 +23,17 @@ def createTemplates(directory=os.getcwd()):
 	templates = []
 	fileList = []
 
-	for bbLog in bbFiles:
-		fileList.append(bbLog.fileName)
+	for log in files:
+		fileList.append(log.fileName)
 
-	for bbLog in bbFiles:
-		templateVars = [bbLog.dict, bbLog.exclusionsList]
-		name = bbLog.fileName.split('\\')[-1]
-		templates.append((bbLog.fileName, template.render(fileList=fileList, fileName=name, templateVars=templateVars)))
+	for bbLogInstance in files:
+		if isinstance(bbLogInstance, bbLog):
+			templateVars = [bbLogInstance.dict, bbLogInstance.exclusionsList]
+		else:
+			templateVars = [bbLogInstance.dict]
+
+		name = bbLogInstance.fileName.split('\\')[-1]
+		templates.append((bbLogInstance.fileName, template.render(fileList=fileList, fileName=name, templateVars=templateVars)))
 
 	return templates
 

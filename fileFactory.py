@@ -1,6 +1,7 @@
 import os
 import datetime
 from bbLog import *
+from accessLog import *
 from time import sleep
 
 class fileFactory:
@@ -15,13 +16,18 @@ class fileFactory:
 		bbFiles = []
 		for f in dirFiles:
 			if re.search(r'[b]{2}-\w+-log.*.txt', f) and not re.search(r'[b]{2}-access-log.*.txt', f):
-				bbFiles.append((f,True))
+				bbFiles.append((f,False))
+			elif re.search(r'[b]{2}-access-log.*.txt', f):
+				bbFiles.append((f, True))
 		return bbFiles
 
 	def createInstances(self):
 		bbFiles = []
-		for bbFile, doFormat in self.bbFiles:
-			if doFormat:
+		for bbFile, isAccessLog in self.bbFiles:
+			if isAccessLog:
+				instance = accessLog(bbFile)
+			else:
 				instance = bbLog(bbFile)
-				bbFiles.append(instance)
+			bbFiles.append(instance)
+
 		return bbFiles
