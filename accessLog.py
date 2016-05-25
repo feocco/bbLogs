@@ -106,6 +106,26 @@ class accessLog:
 			hitsPerHr.append((hour, count))
 		return hitsPerHr
 
+	def peakMinutes(self):
+		hitsPerMin = []
+		for request, values in self.dict.items():
+			for hour in range(1,24):
+				for minute in range(1, 60):
+					count = 0
+					if hour < 10:
+						if minute < 10:
+							timestampReg = re.compile('\d\d/\w+/\d{4}:0' + str(hour) + ':0' + str(minute) + r':\d\d')
+							timestamp = '0' + str(hour) + ':0' + str(minute)
+						else:
+							timestampReg = re.compile('\d\d/\w+/\d{4}:0' + str(hour) + ':' + str(minute) + r':\d\d')
+							timestamp = '0' + str(hour) + ':' + str(minute)
+					else:
+						timestampReg = re.compile('\d\d/\w+/\d{4}:' + str(hour) + ':' + str(minute) + r':\d\d')
+						timestamp = str(hour) + ':' + str(minute)
 
-a = accessLog(r'D:\Downloads\02319467\scratchybb-access-log.2016-05-13.txt')
-print(a.peakHourly())
+					for time in values[0]:
+						match = timestampReg.search(time)
+						if match:
+							count += 1
+					hitsPerMin.append((timestamp, count))
+		return hitsPerMin
