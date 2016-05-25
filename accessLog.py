@@ -90,21 +90,26 @@ class accessLog:
 
 	def peakHourly(self):
 		# Peak hits by hour
-		hitsPerHr = []
-		for hour in range(1,24):
-			count = 0
+		hours = []
+		hits = []
+		hourHits = []
+
+		for hour in range(24):
 			if hour < 10:
-				timestampReg = re.compile('\d\d/\w+/\d{4}:0' + str(hour) + r':\d\d:\d\d')
+				hours.append('0' + str(hour))
 			else:
-				timestampReg = re.compile('\d\d/\w+/\d{4}:' + str(hour) + r':\d\d:\d\d')
-			
-			for request, values in self.dict.items():
-				for time in values[0]:
-					match = timestampReg.search(time)
-					if match:
-						count += 1
-			hitsPerHr.append((hour, count))
-		return hitsPerHr
+				hours.append(str(hour))
+			hits.append(0)
+		
+		for request, values in self.dict.items():
+			for time in values[0]:
+				index = hours.index(time[12:-6])
+				hits[index] += 1
+		
+		for num in range(len(hours)):
+			hourHits.append((hours[num], hits[num]))
+
+		return hourHits
 
 	def peakMinutes(self):
 		minutes = []
