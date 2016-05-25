@@ -107,25 +107,29 @@ class accessLog:
 		return hitsPerHr
 
 	def peakMinutes(self):
-		hitsPerMin = []
-		for request, values in self.dict.items():
-			for hour in range(1,24):
-				for minute in range(1, 60):
-					count = 0
-					if hour < 10:
-						if minute < 10:
-							timestampReg = re.compile('\d\d/\w+/\d{4}:0' + str(hour) + ':0' + str(minute) + r':\d\d')
-							timestamp = '0' + str(hour) + ':0' + str(minute)
-						else:
-							timestampReg = re.compile('\d\d/\w+/\d{4}:0' + str(hour) + ':' + str(minute) + r':\d\d')
-							timestamp = '0' + str(hour) + ':' + str(minute)
-					else:
-						timestampReg = re.compile('\d\d/\w+/\d{4}:' + str(hour) + ':' + str(minute) + r':\d\d')
-						timestamp = str(hour) + ':' + str(minute)
+		minutes = []
+		hits = []
+		minuteHits = []
 
-					for time in values[0]:
-						match = timestampReg.search(time)
-						if match:
-							count += 1
-					hitsPerMin.append((timestamp, count))
-		return hitsPerMin
+		for hour in range(24):
+			for minute in range(60):
+				if minute < 10:
+					if hour < 10:
+						minutes.append( '0' + str(hour) + ':0' + str(minute) )
+					else:
+						minutes.append( str(hour) + ':0' + str(minute) )
+				elif hour < 10:
+					minutes.append( '0' + str(hour) + ':' + str(minute) )
+				else:
+					minutes.append( str(hour) + ':' +str(minute) )
+				hits.append(0)
+
+		for request, values in self.dict.items():
+			for time in values[0]:
+				index = minutes.index(time[12:-3])
+				hits[index] += 1
+
+		for num in range(len(minutes)):
+			minuteHits.append((minutes[num], hits[num]))
+
+		return minuteHits
