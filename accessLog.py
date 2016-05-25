@@ -90,4 +90,22 @@ class accessLog:
 
 	def peakHourly(self):
 		# Peak hits by hour
-		pass
+		hitsPerHr = []
+		for hour in range(1,24):
+			count = 0
+			if hour < 10:
+				timestampReg = re.compile('\d\d/\w+/\d{4}:0' + str(hour) + r':\d\d:\d\d')
+			else:
+				timestampReg = re.compile('\d\d/\w+/\d{4}:' + str(hour) + r':\d\d:\d\d')
+			
+			for request, values in self.dict.items():
+				for time in values[0]:
+					match = timestampReg.search(time)
+					if match:
+						count += 1
+			hitsPerHr.append((hour, count))
+		return hitsPerHr
+
+
+a = accessLog(r'D:\Downloads\02319467\scratchybb-access-log.2016-05-13.txt')
+print(a.peakHourly())
