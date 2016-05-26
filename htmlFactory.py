@@ -18,8 +18,6 @@ def createTemplates(directory=os.getcwd()):
 	# Create the ninja environment and load files from this directory
 	env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
 
-	# Set template we will use
-	template = env.get_template('template.html')
 	templates = []
 	fileList = []
 
@@ -27,10 +25,13 @@ def createTemplates(directory=os.getcwd()):
 		fileList.append(log.fileName)
 
 	for bbLogInstance in files:
+		# if bbLog class instance
 		if isinstance(bbLogInstance, bbLog):
 			templateVars = [bbLogInstance.dict, bbLogInstance.exclusionsList]
+			template = env.get_template('template.html')
 		else:
 			templateVars = [bbLogInstance.dict]
+			template = env.get_template('templateAccess.html')
 
 		name = bbLogInstance.fileName.split('\\')[-1]
 		templates.append((bbLogInstance.fileName, template.render(fileList=fileList, fileName=name, templateVars=templateVars)))
@@ -55,5 +56,6 @@ def printHtmlDocs(templates, inDir=True):
 			fileName = temp[0].split('\\')[- 1][:-4] + '.html'
 		else:
 			fileName = temp[0][:-4] + '.html'
+
 		with open(fileName, "w", encoding="utf8") as fh:
 			fh.write(temp[1])
