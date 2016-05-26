@@ -3,11 +3,10 @@
 <head>
 	<!-- CSS taken from http://www.textfixer.com/tutorials/css-tables.php -->
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
-	<script type="text/javascript" src="https://rawgithub.com/padolsey/jQuery-Plugins/master/sortElements/jquery.sortElements.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src='http://feocco.github.io/Chart.min.js'></script>
 	<style type="text/css">
 	tr, td
 	{
@@ -82,7 +81,7 @@
 			<th>Hits</th>
 			<th>Hour</th>
 		</tr>
-		{% for hour, hits in templateVars[0].peakHourly().items() %}
+		{% for hour, hits in templateVars[0].peakHourly() %}
 			<tr>
 				<td>{{ hour }}</td>
 				<td>{{ hits }}</td>
@@ -91,22 +90,24 @@
 
 	</table>
 
-	<table class="altrowstable" id="alternatecolor" border='0'>
+{# 	<table class="altrowstable" id="alternatecolor" border='0'>
 		<caption>Hits by Minute</caption>
 		<tr>
 			<th>Hits</th>
 			<th>Minute</th>
 		</tr>
-		{% for minute, hits in templateVars[0].peakMinutes().items() %}
+		{% for minute, hits in templateVars[0].peakMinutes() %}
 			<tr>
 				<td>{{ minute }}</td>
 				<td>{{ hits }}</td>
 			</tr>
 		{% endfor %}
 
-	</table>
-
-
+	</table> #}
+	<h1>Flask Chart.js</h1>
+	<!-- bar chart canvas element -->
+	<canvas id="chart" width="1200" height="600">
+	</canvas>
 	<table class="altrowstable" id="alternatecolor" border='0'>
 		<caption>Requests by Number of Hits</caption>
 		<tr>
@@ -126,5 +127,56 @@
 
 	</table>
 </div>
+<script>
+   // bar chart data
+   var barData = {
+   labels : [{% for hour, item in templateVars[0].peakHourly() %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      {
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [{% for minute, item in templateVars[0].peakHourly() %}
+                      {{item}},
+                    {% endfor %}]
+      }]
+   }
+ 
+    Chart.defaults.global.animationSteps = 50;
+    Chart.defaults.global.tooltipYPadding = 16;
+    Chart.defaults.global.tooltipCornerRadius = 0;
+    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+    Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+    Chart.defaults.global.animationEasing = "easeOutBounce";
+    Chart.defaults.global.responsive = false;
+    Chart.defaults.global.scaleLineColor = "black";
+    Chart.defaults.global.scaleFontSize = 16;
+ 
+   // get bar chart canvas
+   var mychart = document.getElementById("chart").getContext("2d");
+ 
+   steps = 20
+   max = 5000
+   // draw bar chart
+   var LineChartDemo = new Chart(mychart).Line(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false,
+ 
+   });
+ 
+</script>
 </body>
 </html>

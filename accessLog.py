@@ -93,7 +93,7 @@ class accessLog:
 		# Peak hits by hour
 		hours = []
 		hits = []
-		hourHits = {}
+		hourHits = []
 
 		for hour in range(24):
 			if hour < 10:
@@ -108,14 +108,14 @@ class accessLog:
 				hits[index] += 1
 		
 		for num in range(len(hours)):
-			hourHits[hours[num]] = hits[num]
+			hourHits.append((hours[num], hits[num]))
 
 		return hourHits
 
 	def peakMinutes(self):
 		minutes = []
 		hits = []
-		minuteHits = {}
+		minuteHits = []
 
 		for hour in range(24):
 			for minute in range(60):
@@ -136,6 +136,6 @@ class accessLog:
 				hits[index] += 1
 
 		for num in range(len(minutes)):
-			minuteHits[minutes[num]] = hits[num]
+			minuteHits.append((minutes[num], hits[num]))
 
 		return minuteHits
