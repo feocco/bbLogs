@@ -59,3 +59,7 @@ def printHtmlDocs(templates, inDir=True):
 
 		with open(fileName, "w", encoding="utf8") as fh:
 			fh.write(temp[1])
+
+
+def createBarChart(barChart):
+	pass

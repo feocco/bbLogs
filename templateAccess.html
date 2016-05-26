@@ -82,7 +82,7 @@
 			<th>Hits</th>
 			<th>Hour</th>
 		</tr>
-		{% for hour, hits in templateVars[0].peakHourly() %}
+		{% for hour, hits in templateVars[0].peakHourly().items() %}
 			<tr>
 				<td>{{ hour }}</td>
 				<td>{{ hits }}</td>
@@ -97,7 +97,7 @@
 			<th>Hits</th>
 			<th>Minute</th>
 		</tr>
-		{% for minute, hits in templateVars[0].peakMinutes() %}
+		{% for minute, hits in templateVars[0].peakMinutes().items() %}
 			<tr>
 				<td>{{ minute }}</td>
 				<td>{{ hits }}</td>
