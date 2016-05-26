@@ -32,15 +32,16 @@ class accessLog:
 
 			if request in myDict:
 				# Unpack values, append duplicate request's values, repack. 
-				preTimestamp, preUserPk1, preIpAddress, preHttpStatus, preTts = myDict[request]
+				preTimestamp, preUserPk1, preIpAddress, preHttpStatus, preTts, count = myDict[request]
 				preTimestamp.append(timestamp)
 				preUserPk1.append(userPk1)
 				preIpAddress.append(ipAddress)
 				preHttpStatus.append(httpStatus)
 				preTts.append(tts)
-				myDict[request] = [preTimestamp, preUserPk1, preIpAddress, preHttpStatus, preTts]
+				count = len(set(preUserPk1))
+				myDict[request] = [preTimestamp, preUserPk1, preIpAddress, preHttpStatus, preTts, count]
 			else:
-				myDict[request] = [[timestamp], [userPk1], [ipAddress], [httpStatus], [tts]]
+				myDict[request] = [[timestamp], [userPk1], [ipAddress], [httpStatus], [tts], 1]
 
 		return myDict
 

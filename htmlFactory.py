@@ -30,7 +30,7 @@ def createTemplates(directory=os.getcwd()):
 			templateVars = [bbLogInstance.dict, bbLogInstance.exclusionsList]
 			template = env.get_template('template.html')
 		else:
-			templateVars = [bbLogInstance.dict]
+			templateVars = [bbLogInstance]
 			template = env.get_template('templateAccess.html')
 
 		name = bbLogInstance.fileName.split('\\')[-1]
