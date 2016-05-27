@@ -75,39 +75,17 @@
 	    </ul>
 	  </div>
 	</nav>
-	<table class="altrowstable" id="alternatecolor" border='0'>
-		<caption>Hits by Hour</caption>
-		<tr>
-			<th>Hits</th>
-			<th>Hour</th>
-		</tr>
-		{% for hour, hits in templateVars[0].peakHourly() %}
-			<tr>
-				<td>{{ hour }}</td>
-				<td>{{ hits }}</td>
-			</tr>
-		{% endfor %}
 
-	</table>
-
-{# 	<table class="altrowstable" id="alternatecolor" border='0'>
-		<caption>Hits by Minute</caption>
-		<tr>
-			<th>Hits</th>
-			<th>Minute</th>
-		</tr>
-		{% for minute, hits in templateVars[0].peakMinutes() %}
-			<tr>
-				<td>{{ minute }}</td>
-				<td>{{ hits }}</td>
-			</tr>
-		{% endfor %}
-
-	</table> #}
-	<h1>Flask Chart.js</h1>
+	<h1>Hits by Hour</h1>
 	<!-- bar chart canvas element -->
-	<canvas id="chart" width="1200" height="600">
+	<canvas id="hourChart" width="1200" height="600">
 	</canvas>
+
+	<h1>Hits by Minute</h1>
+	<!-- bar chart canvas element -->
+	<canvas id="minuteChart" width="1200" height="600">
+	</canvas>
+
 	<table class="altrowstable" id="alternatecolor" border='0'>
 		<caption>Requests by Number of Hits</caption>
 		<tr>
@@ -130,7 +108,7 @@
 <script>
    // bar chart data
    var barData = {
-   labels : [{% for hour, item in templateVars[0].peakHourly() %}
+   labels : [{% for item, hour in templateVars[0].peakHourly()[0] %}
                   "{{item}}",
               {% endfor %}],
    datasets : [
@@ -142,7 +120,7 @@
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
             bezierCurve : false,
-            data : [{% for minute, item in templateVars[0].peakHourly() %}
+            data : [{% for hour, item in templateVars[0].peakHourly()[0] %}
                       {{item}},
                     {% endfor %}]
       }]
@@ -159,10 +137,10 @@
     Chart.defaults.global.scaleFontSize = 16;
  
    // get bar chart canvas
-   var mychart = document.getElementById("chart").getContext("2d");
+   var mychart = document.getElementById("hourChart").getContext("2d");
  
    steps = 20
-   max = 5000
+   max = {{ templateVars[0].peakHourly()[1] }}
    // draw bar chart
    var LineChartDemo = new Chart(mychart).Line(barData, {
         scaleOverride: true,
@@ -171,6 +149,57 @@
         scaleStartValue: 0,
         scaleShowVerticalLines: true,
         scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false,
+ 
+   });
+ 
+</script>
+<script>
+   // bar chart data
+   var barData = {
+   labels : [{% for label in templateVars[0].peakMinutes()[2] %}
+                  "{{label}}",
+              {% endfor %}],
+   datasets : [
+      {
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [{% for minute, item in templateVars[0].peakMinutes()[0] %}
+                      {{item}},
+                    {% endfor %}]
+      }]
+   }
+ 
+    Chart.defaults.global.animationSteps = 2;
+    Chart.defaults.global.tooltipYPadding = 16;
+    Chart.defaults.global.tooltipCornerRadius = 0;
+    Chart.defaults.global.tooltipTitleFontStyle = "normal";
+    Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+    Chart.defaults.global.animationEasing = "easeOutBounce";
+    Chart.defaults.global.responsive = false;
+    Chart.defaults.global.scaleLineColor = "black";
+    Chart.defaults.global.scaleFontSize = 16;
+ 
+   // get bar chart canvas
+   var mychart = document.getElementById("minuteChart").getContext("2d");
+ 
+   steps = 20
+   max = {{ templateVars[0].peakMinutes()[1] }}
+   // draw bar chart
+   var LineChartDemo = new Chart(mychart).Line(barData, {
+        scaleOverride: false,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : false,
         barShowStroke : true,
         scaleShowLabels: true,
         bezierCurve: false,

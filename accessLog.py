@@ -78,6 +78,12 @@ class accessLog:
 		# Failed requests(404)
 		pass
 
+	def maxHits(self, hits):
+		maxHits = max(hits)
+		# Get nearest 100 value, add another 100
+		maxHits -= maxHits % -100
+		return maxHits
+
 	def uniqueVisitors(self):
 		# Returns count of unique user pk1's for entire log
 		uniqueVisitors = []
@@ -110,12 +116,13 @@ class accessLog:
 		for num in range(len(hours)):
 			hourHits.append((hours[num], hits[num]))
 
-		return hourHits
+		return hourHits, self.maxHits(hits)
 
 	def peakMinutes(self):
 		minutes = []
 		hits = []
 		minuteHits = []
+		labels = []
 
 		for hour in range(24):
 			for minute in range(60):
@@ -128,6 +135,12 @@ class accessLog:
 					minutes.append( '0' + str(hour) + ':' + str(minute) )
 				else:
 					minutes.append( str(hour) + ':' +str(minute) )
+
+				if minute % 30 == 0:
+					labels.append(minutes[-1])
+				else:
+					labels.append('')
+
 				hits.append(0)
 
 		for request, values in self.dict.items():
@@ -138,4 +151,7 @@ class accessLog:
 		for num in range(len(minutes)):
 			minuteHits.append((minutes[num], hits[num]))
 
-		return minuteHits
+		maxHits = max(hits)
+		maxHits -= maxHits % -100
+
+		return minuteHits, maxHits, labels
