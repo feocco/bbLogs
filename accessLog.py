@@ -6,6 +6,8 @@ class accessLog:
 	def __init__(self, fileName):
 		self.fileName = fileName
 		self.dict = self.createDict()
+		self.hourHits, self.maxHitsHour = self.peakHourly()
+		self.minuteHits, self.maxHits, self.labels = self.peakMinutes()
 
 	def createDict(self):
 		# RegEx Patterns
